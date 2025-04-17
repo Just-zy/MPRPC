@@ -2,13 +2,38 @@ syntax = "proto3";
 
 package fixbug;     //包名
 // protoc test.proto --cpp_out=./
+
+message ResultCode {
+    int32 errcode = 1;
+    bytes errmsg = 2;
+}
+
 message LoginRequest {
     bytes name = 1;
     bytes pwd = 2;
 }
 
 message LoginResponse {
-    int32 errcode = 1;
-    bytes errmsg = 2;
-    bool success = 3;
+    ResultCode result = 1;
+    bool success = 2;
+    // map<int32, string> friends = 3;
+}
+
+message GetFriendListRequest {
+    uint32 userid = 1;
+}
+
+message User{
+    bytes name = 1;
+    uint32 age = 2;
+    enum Sex {
+        FEMALE = 0;
+        MALE = 1;
+    }
+    Sex sex = 3;
+}
+
+message GetFriendListResponse {
+    ResultCode result = 1;
+    repeated User friend_list = 2;
 }
